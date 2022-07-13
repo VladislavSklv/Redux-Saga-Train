@@ -1,8 +1,5 @@
 import React from 'react';
-
-export interface IPost {
-    title: string;
-}
+import { IPost } from '../types/interfaces';
 
 export interface IPostProps {
     post: IPost;

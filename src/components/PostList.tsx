@@ -1,14 +1,24 @@
+import { connect, useDispatch, useSelector } from 'react-redux'
 import React from 'react';
-import PostItem, { IPost, IPostProps } from './PostItem';
+import { IPost } from '../types/interfaces';
+import PostItem, { IPostProps } from './PostItem';
 
 interface IPostListProps {
-    posts: IPost[];
+    syncPosts?: IPost[];
 }
 
-const PostList: React.FC<IPostListProps> = ({posts}): any => {
+const PostList: React.FC<IPostListProps> = ({syncPosts}: any) => {
+    if (syncPosts.length === 0) {return <h2>There are no posts yet</h2>}
+
     return (
-        posts.map(post => <PostItem key={post.title} post={post}/>)
+        syncPosts.map((post: IPost) => <PostItem key={post.title} post={post}/>)
     );
 };
 
-export default PostList;
+const mapStateToProps = (state: any) => {
+    return {
+        syncPosts: state.posts.posts
+    };
+};
+
+export default connect(mapStateToProps, null)(PostList);
